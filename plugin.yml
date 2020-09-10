@@ -1,6 +1,6 @@
 name: SuperHub
 main: NinjaKnights\SuperHub\Main
-version: 1.0
+version: 1.0.0
 api: 3.0.0
 mcpe-protocol: [361, 388, 389, 390, 407, 408]
 author: TheKnightGamer / Jean  #Add your name here when you contribute 
@@ -8,9 +8,19 @@ description: A Super Hub plugin
     
 commands:
   test:
-    description: 
+    description: ""
+  chat:
+    description: "Chat related commands"
+    permission: superhub.commands.chat
 
 permissions:
   test.all:
     default: op
-    description: 
+    description: ""
+  superhub:
+    children:
+      superhub.commands:
+        children:
+          superhub.commands.chat:
+            description: "Chat related commands"
+            default: op
