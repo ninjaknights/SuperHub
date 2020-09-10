@@ -38,17 +38,17 @@ class API
     private function setChatLocked(bool $locked = true){
         $this->isChatLocked = $locked;
     }
-    
+
     // $author is not a Player in case it's the Console
     public function lockChat(string $author, bool $locked =  true) : bool{
         if($this->isChatLocked() == $locked) return false;
         $this->setChatLocked($locked);
         if($locked){
             //Chat closed by $author
-            $this->server->broadcastMessage(Main::PREFIX.TextFormat::RED."Closed Chat by {$author}");
+            $this->server->broadcastMessage(Main::PREFIX.TextFormat::RED." Chat Closed by {$author}");
         }else{
             //Chat opened by $author
-            $this->server->broadcastMessage(Main::PREFIX.TextFormat::GREEN."Chat opened by {$author}");
+            $this->server->broadcastMessage(Main::PREFIX.TextFormat::GREEN."Chat Opened by {$author}");
         }
         return true;
     }

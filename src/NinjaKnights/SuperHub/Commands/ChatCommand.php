@@ -10,7 +10,7 @@ use pocketmine\utils\TextFormat;
 class ChatCommand extends PluginCommand
 {
     private $plugin;
-    
+
     public function __construct(Main $owner)
     {
         $this->plugin = $owner;
@@ -49,8 +49,9 @@ class ChatCommand extends PluginCommand
             case 'clear':
             case 'reset':
                 //i really don't know if it works
-                $this->plugin->getServer()->broadcastMessage(str_repeat("\n", 20));
+                $this->plugin->getServer()->broadcastMessage(str_repeat("\n", 1000));
                 $sender->sendMessage(Main::PREFIX.TextFormat::YELLOW."You successfully cleared chat!");
+                break;
         }
         return true;
     }

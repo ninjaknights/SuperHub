@@ -19,7 +19,7 @@ class PlayerListener implements Listener
         if($this->plugin->getAPI()->isChatLocked() && !$event->getPlayer()->hasPermission("superhub.chat.bypass")){
             $event->setCancelled();
             // %permission_missing%
-            $event->getPlayer()->sendMessage(Main::PREFIX.TextFormat::RED."");
+            $event->getPlayer()->sendMessage(Main::PREFIX.TextFormat::RED." You don't have permission to chat");
         }
     }
 }
