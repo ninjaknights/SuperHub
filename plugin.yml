@@ -1,9 +1,10 @@
 name: SuperHub
 main: ninjaknights\SuperHub\Main
-version: 0.1
+version: 0.2
 api: 4.0.0
 author: NinjaKnights
 authors:
   - Jean-TKG
   - Adel
+  - BlackAngels56
 description: A hub plugin

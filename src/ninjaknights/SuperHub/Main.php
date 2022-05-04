@@ -5,6 +5,9 @@ namespace ninjaknights\SuperHub;
 use ninjaknights\SuperHub\Commands\ChatCommand;
 use ninjaknights\SuperHub\commands\LobbyCommand;
 use ninjaknights\SuperHub\commands\SetLobbyCommand;
+use ninjaknights\SuperHub\listeners\JoinListener;
+use ninjaknights\SuperHub\listeners\PlayerListener;
+use ninjaknights\SuperHub\listeners\WorldListener;
 use ninjaknights\SuperHub\listeners\ChatListener;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat;
@@ -19,15 +22,22 @@ class Main extends PluginBase
     protected function onLoad(): void
     {
         self::$instance = $this;
+        if (!file_exists($this->getDataFolder() . "config.yml")) {
+            $this->saveResource("config.yml");
+        }
     }
 
     public function onEnable(): void
     {
         $this->getServer()->getPluginManager()->registerEvents(new ChatListener(), $this);
+        $this->getServer()->getPluginManager()->registerEvents(new WorldListener(), $this);
+        $this->getServer()->getPluginManager()->registerEvents(new PlayerListener(), $this);
+        $this->getServer()->getPluginManager()->registerEvents(new JoinListener(), $this);
         $this->api = new API();
         $this->getServer()->getCommandMap()->register("superhub", new ChatCommand($this, "chat", "Chat Commands"));
         $this->getServer()->getCommandMap()->register("superhub", new SetLobbyCommand($this, "setlobby", "Set Lobby"));
         $this->getServer()->getCommandMap()->register("superhub", new LobbyCommand($this, "lobby", "Teleport to Lobby"));
+
     }
 
     /**

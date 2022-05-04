@@ -1,1 +1,78 @@
-#Config.yml
+#       _____                       _    _       _
+#      / ____|                     | |  | |     | |
+#     | (___  _   _ _ __   ___ _ __| |__| |_   _| |__
+#      \___ \| | | | '_ \ / _ \ '__|  __  | | | | '_ \
+#      ____) | |_| | |_) |  __/ |  | |  | | |_| | |_) |
+#     |_____/ \__,_| .__/ \___|_|  |_|  |_|\____|____/
+#                  | |
+#                  |_|
+# ------------------------ #
+# | WORLD EVENT SETTINGS | #
+# ------------------------ #
+
+world_settings:
+
+  # Player
+  disable_hunger_loss: true
+  disable_player_pvp: true
+  disable_fall_damage: true
+  disable_fire_damage: true
+  disable_drowning: true
+  disable_void_death: true
+
+  # Misc
+  disable_death_message: true # ????
+
+  # Item entities
+  disable_item_drop: true
+  disable_item_pickup: true
+
+  # Blocks
+  disable_block_break: true
+  disable_block_place: true
+  disable_block_interact: true
+
+# --------------------- #
+# | PLAYER JOIN EVENT | #
+# --------------------- #
+
+join_leave_messages:
+  # Should SuperHub handle join/quit messages?
+  enabled: true
+
+  join_message: "&2&l+ &6[PLAYER] &7Connected"
+  quit_message: "&4&l- &6[PLAYER] &7Disconnected"
+
+# Actions executed upon join
+join_events:
+
+  join_message:
+    enabled: true
+    message: "hello [LINE] hi"
+
+  join_title:
+    enabled: true
+    title: "Welcome [PLAYER]"
+    subtitle: "to SuperHub"
+    fade_in: 20
+    stay: 60
+    fade_out: 20
+
+  join_sound:
+    enabled: true
+    sound: TotemUse
+
+  join_effect:
+    enabled: true
+    effect: NIGHT_VISION
+    duration: 100
+
+join_settings:
+  # Should we teleport the player to the spawn point (if set) on join?
+  spawn_join: true
+  # Should we heal the player?
+  heal: true
+  # Should we extinguish the player?
+  extinguish: true
+  # Should we clear their inventory?
+  clear_inventory: false
