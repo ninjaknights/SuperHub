@@ -42,6 +42,7 @@ class PlayerListener implements Listener
 
     public function onDamage(EntityDamageEvent $event)
     {
+        $player = $event->getEntity();
         $config = Main::getInstance()->getConfig();
 
         /*
@@ -77,6 +78,7 @@ class PlayerListener implements Listener
         if($config->getNested('world_settings.disable_void_death', true)) {
             if($event->getCause() == 11) {
                 $event->cancel();
+                $player->teleport($player->getWorld()->getSpawnLocation(),0.0, 0.0);
             }
         }
 
@@ -88,7 +90,6 @@ class PlayerListener implements Listener
                 $event->cancel();
             }
         }
-
     }
 
 }

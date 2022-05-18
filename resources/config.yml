@@ -6,6 +6,40 @@
 #     |_____/ \__,_| .__/ \___|_|  |_|  |_|\____|____/
 #                  | |
 #                  |_|
+# ------------------ #
+# | AUTO BROADCAST | #
+# ------------------ #
+
+announcements:
+  # Should the announcements system be enabled ?
+  enabled: true
+
+  # Delay to send announcements (in seconds)
+  delay: 60
+
+  # How many players should be required to send announcements?
+  required_players: 1
+
+  # Announcement list
+  messages:
+    test1: "Test"
+    test2: "Test2"
+    test3: "Test3"
+
+# ------------------- #
+# | CHAT MANAGEMENT | #
+# ------------------- #
+
+command_block:
+  # Should the command blocker feature be enabled?
+  enabled: true
+
+  # List of commands that will be blocked
+  blocked_commands:
+    - "w"
+    - "list"
+    - "version"
+
 # ------------------------ #
 # | WORLD EVENT SETTINGS | #
 # ------------------------ #
@@ -18,7 +52,7 @@ world_settings:
   disable_fall_damage: true
   disable_fire_damage: true
   disable_drowning: true
-  disable_void_death: true
+  disable_void_death: true # if true the player will teleport back to spawn when he falls in the void
 
   # Misc
   disable_death_message: true # ????
@@ -48,7 +82,9 @@ join_events:
 
   join_message:
     enabled: true
-    message: "hello [LINE] hi"
+    message:
+      - "test"
+      - "hi"
 
   join_title:
     enabled: true
@@ -64,7 +100,9 @@ join_events:
 
   join_effect:
     enabled: true
-    effect: NIGHT_VISION
+    effect:
+      - NIGHT_VISION
+      - HEALTH_BOOST
     duration: 100
 
 join_settings:
@@ -76,3 +114,54 @@ join_settings:
   extinguish: true
   # Should we clear their inventory?
   clear_inventory: false
+
+# ------------- #
+# | LAUNCHPAD | #
+# ------------- #
+
+launchpad:
+  # Should the launchpad feature be enabled ?
+  enabled: true
+
+  # Launch power for launchpad (max 4.0)
+  launch_power: 1
+  launch_power_y: 1
+
+  block: Redstone Block
+
+# --------------- #
+# | DOUBLE JUMP | #
+# --------------- #
+
+double_jump:
+  # Should the double jump feature be enabled?
+  enabled: true
+
+  # Launch power for double jump (max 4.0)
+  launch_power_y: 0.9
+
+# ---------------- #
+# | PLAYER HIDER | #
+# ---------------- #
+
+player_hider:
+  # Should the player hider feature be enabled?
+  enabled: true
+  # Slot the item should be given to?
+  slot: 8
+
+  not_hidden:
+    material: LIME_DYE
+    amount: 1
+    display_name: 'Hide Players'
+    lore:
+      - '&7Click to hide all players!'
+      - 'Testing'
+      - 'another Test'
+
+  hidden:
+    material: GRAY_DYE
+    amount: 1
+    display_name: 'Show Players'
+    lore:
+      - '&7Click to show all players!'

@@ -3,6 +3,7 @@
 namespace ninjaknights\SuperHub\listeners;
 
 use ninjaknights\SuperHub\Main;
+use ninjaknights\SuperHub\tasks\AnnouncementTask;
 use pocketmine\entity\effect\EffectInstance;
 use pocketmine\entity\effect\VanillaEffects;
 use pocketmine\event\Listener;
@@ -15,6 +16,7 @@ class JoinListener implements Listener
 
     public function onJoin(PlayerJoinEvent $event)
     {
+        $main = Main::getInstance();
         $player = $event->getPlayer();
         $name = $player->getName();
         $config = Main::getInstance()->getConfig();
@@ -39,9 +41,11 @@ class JoinListener implements Listener
             $msg = str_replace(
                 ["&", "[LINE]", "[PLAYER]"],
                 ["§", "\n", "$name"],
-                $config->getNested('join_events.join_message.message')
+                $config->getNested('join_events.join_message.message', [])
             );
-            $player->sendMessage($msg);
+            foreach($msg as $test) {
+                $player->sendMessage($test);
+            }
         }
 
         /*
@@ -76,9 +80,11 @@ class JoinListener implements Listener
          * Join Effect
          */
         if($config->getNested('join_events.join_effect.enabled', true)) {
-            $effect = $config->getNested('join_events.join_effect.effect');
+            $effects = $config->getNested('join_events.join_effect.effect', []);
             $duration = $config->getNested('join_events.join_effect.duration');
-            $player->getEffects()->add(new EffectInstance(VanillaEffects::$effect(), 20 * $duration));
+            foreach($effects as $effect) {
+                $player->getEffects()->add(new EffectInstance(VanillaEffects::$effect(), 20 * $duration));
+            }
         }
 
         /*
@@ -109,6 +115,34 @@ class JoinListener implements Listener
             $player->getInventory()->clearAll();
         }
 
+        /*
+         * Auto Broadcast
+         */
+        if($config->getNested('announcements.enabled', true)) {
+            $delay = $config->getNested('announcements.delay');
+            $playercount = $config->getNested('announcements.required_players');
+            $count = count($main->getServer()->getOnlinePlayers());
+            if($count >= $playercount) {
+                $main->getScheduler()->scheduleRepeatingTask(new AnnouncementTask(), 20 * $delay);
+            }
+        }
+
+        /*
+         * Player Hider
+         */
+        if($config->getNested('player_hider.enabled', true)) {
+            if (!in_array($name, $main->showall) && !in_array($name, $main->shownone)) {
+
+                $main->showall[] = $name;
+
+            }
+            if (in_array($name, $main->showall)) {
+                $main->getHidePlayerItem()->getNotHiddenItem($player);
+            } elseif (in_array($name, $main->shownone)) {
+                $main->getHidePlayerItem()->getHideItem($player);
+            }
+        }
+
     }
 
     public function onQuit(PlayerQuitEvent $event)
@@ -124,18 +158,17 @@ class JoinListener implements Listener
             $msg = str_replace(
                 ["&", "[LINE]", "[PLAYER]"],
                 ["§", "\n", "$name"],
-                Main::getInstance()->getConfig()->getNested('join_leave_messages.quit_message')
+                $config->getNested('join_leave_messages.quit_message')
             );
             $event->setQuitMessage($msg);
         }
 
     }
 
-    protected static function playSound(string $sound) : Sound {
+    protected static function playSound(string $sound) : Sound
+    {
         $sound = "pocketmine\\world\\sound\\".$sound."Sound";
         return new $sound;
 	}
-
-
 
 }
